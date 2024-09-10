@@ -7,7 +7,7 @@ import (
 )
 
 type Result struct {
-	sum int
+	sum  int
 	path string
 }
 
@@ -24,7 +24,6 @@ func readFile(filePath string) ([]byte, error) {
 // sum all bytes of a file
 func sum(filePath string, canal chan Result) {
 	data, _ := readFile(filePath)
-	
 
 	_sum := 0
 	for _, b := range data {
@@ -44,7 +43,7 @@ func main() {
 	var totalSum int64
 
 	canal := make(chan Result, len(os.Args[1]))
-	
+
 	sums := make(map[int][]string)
 
 	for _, path := range os.Args[1:] {
@@ -52,8 +51,8 @@ func main() {
 	}
 
 	for range os.Args[1:] {
-		result_n := <- canal 
-			
+		result_n := <-canal
+
 		sums[result_n.sum] = append(sums[result_n.sum], result_n.path)
 		totalSum += int64(result_n.sum)
 	}
